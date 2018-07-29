@@ -1,2 +1,3 @@
 # Minerva
-school work
+
+This repo includes school projects
