@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kanban Board</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+  <div class="flex-outer" style="background-color:#333;"> 
+    <h2>Kanban Board</h2>
+    <h4>Welcome {{username}} </h4>
+  </div>
+
+<br>
+
+<div class= "col-container" style="background: #333">
+  {% block body %}
+
+  <div class="col" style="background-color:darkgrey;">
+    <h2 style="color:#990000">To do</h2>
+    
+    {% for todo in todos %}
+        <div class='card'>
+
+
+        <div class="col" >
+            <p>{{todo.title}}</p>
+            <p style="font-size:70%" >{{todo.description}}</p>
+        </div>
+
+        <div class="col">
+            <form action="{{ url_for('move_task', task_id=todo.task_id) }}" method='POST'>
+              <input type="hidden" name= "next_step" value="{{ state_mapping[todo.status]}}">
+              <button type="submit">>></button>
+            </form>
+             <form action="{{ url_for('delete_task', task_id=todo.task_id) }}" method='POST'>
+              <button type="submit">X</button>
+            </form>   
+    
+        </div>
+
+
+      </div>
+
+    {% endfor %}
+    
+    
+  </div>
+
+  <div class="col" style="background-color:darkgrey;">
+    <h2 style="color:#CC6600"> Doing</h2>
+    
+    {% for doing in doings %}
+      <div class='card'>
+
+
+        <div class="col" >
+            <p>{{doing.title}}</p>
+            <p style="font-size:70%" >{{doing.description}}</p>
+        </div>
+
+        <div class="col" >
+           <form action="{{ url_for('move_task', task_id=doing.task_id) }}" method='POST'>
+              <input type="hidden" name= "next_step" value="{{ state_mapping[doing.status]}}">
+              <button type="submit">>></button>
+            </form>
+            <form action="{{ url_for('delete_task', task_id=doing.task_id) }}" method='POST'>
+              <button type="submit">X</button>
+            </form>
+
+        </div>
+      </div>
+
+    {% endfor %}
+    
+  </div>
+
+  <div class="col" style="background-color:darkgrey;">
+    <h2 style="color:#006633">Done</h2>
+    
+    {% for done in dones %}
+      <div class='card'>
+
+        <div class="col" >
+            <p>{{done.title}}</p>
+            <p style="font-size:70%" >{{done.description}}</p>
+        </div>
+
+        <div class="col">
+            <form action="{{ url_for('move_task', task_id=done.task_id) }}" method='POST'>
+              <input type="hidden" name= "next_step" value="{{ state_mapping[done.status]}}">
+              <button type="submit">>></button>
+            </form>
+            <form action="{{ url_for('delete_task', task_id=done.task_id) }}" method='POST'>
+              <button type="submit">X</button>
+            </form>
+
+        </div>
+      </div>
+
+    {% endfor %}
+    
+  </div>
+
+</div>
+ <div class="flex-outer" style="background-color:#333;">
+  <form action="{{ url_for('add_task') }}" method='POST'>
+  <ul class="flex-outer" style="background-color:darkgrey;">
+  	<h4>Add new task</h4>
+
+      <div class="form-group" >
+        <input type="text" name="task" id="task" placeholder="Add task title" style="text-align: left">
+      </div>
+
+      <br>
+
+
+       <div class="form-group">
+        <input type="text" name="desc" id="desc" placeholder="Add task description" style="width: 500px;text-align: left">
+
+
+      </div>
+
+      <br>
+      <div class="form-group">
+
+        <button type="submit">Add task</button>
+      </div>
+  </ul>
+  </form>
+
+{% endblock %}
+</div>
+
+<div>
+<div>
+<form action="{{ url_for('logout') }}" align="right" >
+    <button type="submit" >logout</button>
+</form> 
+</div>
+</body>
+</html>
+

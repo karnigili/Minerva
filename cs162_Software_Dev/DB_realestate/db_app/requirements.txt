@@ -1,0 +1,7 @@
+tabulate==0.8.2
+matplotlib==1.5.3
+numpy==1.12.1
+Faker==0.8.11
+SQLAlchemy==1.2.5
+pprintpp==0.3.0
+
